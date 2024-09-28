@@ -1,28 +1,58 @@
-import {
-  createBrowserRouter,
-  RouterProvider
-} from 'react-router-dom'
-import { CreatePost } from './components/CreatePost'
-import { Home } from './components/Home'
 import React from 'react'
-import './App.css'
-import Login from './components/Login'
+import {
+    createBrowserRouter,
+    RouterProvider,
+    Navigate,
+    Outlet,
+} from 'react-router-dom'
+import { Home } from './components/Home'
+import { Login } from './components/Login'
+import { Posts } from './components/Posts'
+import { Header } from './components/Header/Header'
+import { Layout } from './components/Layout/Layout'
+import { SignUp } from './components/SignUp'
+import { PostView } from './components/PostView'
+import { UserPosts } from './components/UserPosts'
+import { CreatePost } from './components/CreatePost'
+import { NotFound } from './components/NotFound'
+import { useShallow } from 'zustand/react/shallow'
+import { useStore } from './store'
 
-function App() {
-  const router = createBrowserRouter([
-    { path: '/', element: <Home /> },
-    { path: '/create-post', element: <CreatePost /> },
-    { path: '/login', element: <Login /> },
-
-  ])
-
-  return (
-    <>
-      <React.StrictMode>
-        <RouterProvider router={router}></RouterProvider>
-      </React.StrictMode>
-    </>
-  )
+function ProtectedRoute({ element }) {
+    const { user } = useStore(
+        useShallow((state) => ({
+            user: state.user,
+        }))
+    );
+    if (!user) {
+        return <Navigate to="/login" replace />;
+    }
+    return element;
 }
 
-export default App
+export function App() {
+    const { user } = useStore(
+        useShallow((state) => ({
+            user: state.user,
+        }))
+    );
+    const router = createBrowserRouter([
+        {
+            path: '/',
+            element: <Layout />,
+            children: [
+                { path: '/', element: <Home /> },
+                { path: '/login', element: <Login /> },
+                { path: '/signup', element: <SignUp /> },
+                { path: '/create-post', element: <ProtectedRoute element={<CreatePost />} /> },
+                { path: `/user/:username/posts`, element: <ProtectedRoute element={<UserPosts />} /> },
+                { path: '/posts/:postId', element: <PostView /> },
+                { path: '*', element: <NotFound /> },
+            ],
+        },
+    ]);
+
+    return (
+        <RouterProvider router={router} />
+    )
+}

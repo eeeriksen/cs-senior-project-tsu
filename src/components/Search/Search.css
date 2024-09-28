@@ -1,0 +1,107 @@
+.search-box {
+    margin-right: 8px;
+    height: 34px;
+    flex: auto;
+}
+
+.search-input-box {
+    height: 100%;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 2px 0 8px;
+
+    svg {
+        color: var(--primary);
+    }
+}
+
+.search-input {
+    border: none;
+    height: 100%;
+    padding: 0 10px;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+}
+
+.results-box {
+    border: 1px solid var(--primary);
+    min-width: 320px;
+    width: 100%;
+    top: 38px;
+    left: -1px;
+    position: absolute;
+    z-index: 1000;
+    max-height: 140px;
+    overflow: auto;
+    border-radius: 4px;
+    scrollbar-width: thin;
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        background: white;
+
+        div {
+            display: flex;
+            align-items: center;
+            padding: 2px 8px;
+
+            svg {
+                flex-shrink: 0;
+            }
+
+            &:hover {
+                background: #f0f0f0;
+            }
+        }
+    }
+
+    .college-item {
+        padding: 8px 0 8px 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        height: 40px;
+
+        svg {
+            margin-right: 6px;
+        }
+    }
+}
+
+.selected-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+    height: 34px;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    width: 100%;
+    background-color: var(--primary-light);
+
+    span {
+        font-size: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--primary);
+        padding: 0;
+        width: 20px;
+    }
+}

@@ -1,0 +1,6 @@
+.main {
+    margin: auto;
+    margin-top: 58px;
+    max-width: 920px;
+    height: calc(100vh - 58px);
+}

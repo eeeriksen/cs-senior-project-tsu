@@ -1,8 +1,3 @@
-# React + Vite
+# Campus Voices
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This application is designed for university communities to foster conversations about any events or issues occurring on campus. The platform allows students, faculty, and staff to share experiences, concerns, or problems they encounter, encouraging mutual support among community members. Additionally, it provides universities with valuable insights into the most pressing issues affecting the campus, helping them address and improve the overall student experience. The goal is to create a collaborative environment where people can discuss and solve problems together, enhancing communication and awareness across the university.
