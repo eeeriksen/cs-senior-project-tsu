@@ -1,7 +1,161 @@
 .post-view {
-    padding: 34px 8px;
+    padding: 34px 16px;
 
     h2 {
         margin-top: 0;
+    }
+
+    .back-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .post-data {
+        display: flex;
+        gap: 6px;
+        font-size: 14px;
+        position: relative;
+
+        color: var(--dark);
+
+        .username {
+            font-weight: bold;
+        }
+
+        .time {
+            font-weight: 300;
+        }
+
+        .time,
+        .username {
+            margin-bottom: 2px;
+            width: 100%;
+        }
+
+        button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: transparent;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+
+            &:hover {
+                color: var(--dark);
+            }
+        }
+    }
+
+    .post-title {
+        margin-bottom: 0;
+    }
+
+    .post-body {
+        border-bottom: 1px solid var(--primary);
+        padding: 8px 0 20px;
+        margin-top: 0px;
+        font-size: 18px;
+    }
+
+    .comments-section {
+
+        .comments-list {
+            padding-inline-start: 0;
+            box-sizing: border-box;
+            list-style: none;
+
+            li {
+                position: relative;
+                padding-bottom: 16px;
+                margin-bottom: 16px;
+                border-bottom: 1px solid var(--primary-light);
+            }
+
+            .comment-item {
+                margin: 0;
+                font-weight: 700;
+                font-size: 14px;
+
+                span {
+                    font-weight: 300;
+                }
+            }
+
+            .remove-comment {
+                position: absolute;
+                right: 0;
+                top: 0;
+                background-color: transparent;
+                border: none;
+                color: var(--primary);
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--dark);
+                }
+            }
+
+            .comment-text {
+                margin: 0;
+            }
+
+        }
+
+        .comment-input {
+            border-radius: 6px;
+            padding: 16px;
+            width: 100%;
+            font-family: system-ui;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+    }
+
+    .modal-buttons {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+
+    .post-comment {
+        font-size: 16px;
+        height: 34px;
+        line-height: 16px;
+        margin: 0;
+        padding: 0 12px;
+        color: white;
+        background-color: var(--primary);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:disabled {
+            background-color: var(--primary-light);
+            cursor: not-allowed;
+        }
+
+        &:hover {
+            background-color: var(--dark);
+        }
+    }
+
+    .confirm-button {
+        font-size: 16px;
+        height: 34px;
+        line-height: 16px;
+        margin: 0;
+        padding: 0 12px;
+        color: var(--dark);
+        border: 1px solid var(--primary);
+        background-color: var(--primary--light);
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--primary-light);
+        }
     }
 }

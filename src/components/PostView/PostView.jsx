@@ -7,6 +7,8 @@ import { Modal } from '../Modal';
 import { useModal } from '../../hooks/useModal';
 import { parseDate } from '../../utils/parseDate'
 import { useStore } from '../../store'
+import { Thrash } from '../Icons/Thrash';
+import { BackArrow } from '../Icons/BackArrow';
 import "./PostView.css";
 
 export function PostView() {
@@ -130,6 +132,11 @@ export function PostView() {
         }
     };
 
+    const handleBackButton = () => {
+        console.log(1)
+        navigate('/');
+    }
+
     console.log(post);
     const postDate = post && parseDate(post.createdAt);
     const timeAgo = post && formatDistanceToNow(postDate, { addSuffix: true });
@@ -139,52 +146,72 @@ export function PostView() {
 
     if (post) return (
         <div className="post-view">
+            <button className="back-button" onClick={handleBackButton}>
+                <BackArrow />
+            </button>
             <div className="post-data">
                 <p className="username">
                     {post.username} • <span
                         title={postDate}
                         className="time"
                     >{timeAgo}</span>
+                    {user && user.username === post.username && (
+                        <button onClick={deletePost}>
+                            <Thrash />
+                        </button>
+                    )}
                 </p>
             </div>
-            <p>{post.body}</p>
-            {user && user.username === post.username && (
-                <button onClick={deletePost}>Delete Post</button>
-            )}
-            <section>
+            <h2 className="post-title">{post.title}</h2>
+            <p className="post-body">{post.body}</p>
+            <section className="comments-section">
                 <h3>Comments</h3>
                 {comments.length === 0 ? (
                     <p>No comments yet</p>
                 ) : (
-                    <ul>
-                        {comments.map(comment => (
-                            <li key={comment.commentId}>
-                                <p>{comment.comment}</p>
-                                <p>By: {comment.username}</p>
-                                {user && user.username === comment.username && (
-                                    <button onClick={() => openModal(post.postId)}>
-                                        Delete
-                                    </button>
-                                )}
-                            </li>
-                        ))}
+                    <ul className="comments-list">
+                        {comments.map(comment => {
+                            const commentDate = post && parseDate(post.createdAt);
+                            const commentTimeAgo = post && formatDistanceToNow(commentDate, { addSuffix: true });
+
+                            return (
+                                <li key={comment.commentId}>
+                                    <p className="comment-item">{comment.username}• <span
+                                        title={postDate}
+                                        className="time"
+                                    >{timeAgo}</span></p>
+                                    {user && user.username === comment.username && (
+                                        <button
+                                            className="remove-comment"
+                                            onClick={() => openModal(post.postId)}
+                                        >
+                                            <Thrash />
+                                        </button>
+                                    )}
+                                    <p className="comment-text">{comment.comment}</p>
+                                </li>
+                            )
+                        })}
                     </ul>
                 )}
                 {user && <div>
                     <textarea
+                        className="comment-input"
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         placeholder="Add a comment"
                     />
-                    <button disabled={isAddingComment} onClick={addComment}>Comment</button>
+                    <button className="post-comment" disabled={isAddingComment || newComment === ""} onClick={addComment}>Post Comment</button>
                 </div>}
             </section>
             {isModalOpen && (
                 <Modal toggleModal={toggleModal}>
                     <>
                         <p>Are you sure you want to delete this post?</p>
-                        <button onClick={confirmDelete}>Yes, Delete</button>
-                        <button onClick={toggleModal}>Cancel</button>
+                        <div className="modal-buttons">
+                            <button className="confirm-button" onClick={confirmDelete}>Yes, Delete</button>
+                            <button className="post-comment" onClick={toggleModal}>Cancel</button>
+                        </div>
                     </>
                 </Modal>
             )}
