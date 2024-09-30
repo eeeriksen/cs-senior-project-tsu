@@ -111,9 +111,10 @@
             background-color: var(--secondary);
         }
 
-        .error-text {
-            color: var(--error);
-        }
+    }
+
+    .error-text {
+        color: var(--error);
     }
 }
 

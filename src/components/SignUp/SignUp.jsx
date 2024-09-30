@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { Logo } from '../Icons/Logo'
 import { Eye } from '../Icons/Eye'
 import { EyeOff } from '../Icons/EyeOff'
-import { emailList } from '../../consts/emailList';
+import { collegeByEmail } from '../../consts/collegeByEmail';
 import './SignUp.css'
 
 export function SignUp() {
@@ -32,16 +32,9 @@ export function SignUp() {
         }
 
         const domain = email.split('@')[1];
-        const extension = email.split('.')[1];
 
-        if (extension !== 'edu') {
-            setError('Sign up with your .edu email to get access.');
-            setLoading(false);
-            return;
-        }
-
-        if (!emailList.includes(domain)) {
-            setError('Sign up with a valid .edu email.');
+        if (!Object.keys(collegeByEmail).includes(domain)) {
+            setError('Sign up with a valid academic email.');
             setLoading(false);
             return;
         }
