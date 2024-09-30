@@ -12,7 +12,6 @@ import { Header } from './components/Header/Header'
 import { Layout } from './components/Layout/Layout'
 import { SignUp } from './components/SignUp'
 import { PostView } from './components/PostView'
-import { UserPosts } from './components/UserPosts'
 import { CreatePost } from './components/CreatePost'
 import { NotFound } from './components/NotFound'
 import { useShallow } from 'zustand/react/shallow'
@@ -44,8 +43,6 @@ export function App() {
                 { path: '/', element: <Home /> },
                 { path: '/login', element: <Login /> },
                 { path: '/signup', element: <SignUp /> },
-                { path: '/create-post', element: <ProtectedRoute element={<CreatePost />} /> },
-                { path: `/user/:username/posts`, element: <ProtectedRoute element={<UserPosts />} /> },
                 { path: '/posts/:postId', element: <PostView /> },
                 { path: '*', element: <NotFound /> },
             ],

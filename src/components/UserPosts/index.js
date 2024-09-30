@@ -1,1 +1,0 @@
-export { UserPosts } from './UserPosts'

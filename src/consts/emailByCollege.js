@@ -1,4 +1,4 @@
-export const colleges = {
+export const emailByCollege = {
     "Abilene Christian University": "acu.edu",
     "Adelphi University": "adelphi.edu",
     "Agnes Scott College": "scottlan.edu",
@@ -455,7 +455,8 @@ export const colleges = {
     "Messiah College": "messiah.edu",
     "Metropolitan State College of Denver": "mscd.edu",
     "Metropolitan State University": "metro.msus.edu",
-    "Miami Christian University: (mcu.edu) Miami University of Ohio": "muohio.edu",
+    "Miami Christian University": "mcu.edu",
+    "Miami University of Ohio": "muohio.edu",
     "Michigan State University": "msu.edu",
     "Michigan Technological University": "mtu.edu",
     "Mid-America Nazarene College": "manc.edu",
@@ -761,7 +762,6 @@ export const colleges = {
     "Transylvania University": "transy.edu",
     "Trenton State College": "trenton.edu",
     "Trinity College: (CT)": "trincoll.edu",
-    "Trinity College": "DC",
     "Trinity University": "trinity.edu",
     "Troy State University": "tsufl.edu",
     "Truman State University": "truman.edu",
@@ -1001,7 +1001,8 @@ export const colleges = {
     "Washington State University at Vancouver": "vancouver.wsu.edu",
     "Washington University, Saint Louis": "wustl.edu",
     "Wayne State University": "wayne.edu",
-    "Waynesburg College: (waynesburg.edu) Weber State University": "weber.edu",
+    "Waynesburg College": "waynesburg.edu",
+    "Weber State University": "weber.edu",
     "Webster University": "websteruniv.edu",
     "Wellesley College": "wellesley.edu",
     "Wells College": "wells.edu",
