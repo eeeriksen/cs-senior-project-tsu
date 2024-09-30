@@ -4,11 +4,12 @@ import { formatDistanceToNow } from 'date-fns';
 import { useStore } from '../../store'
 import { useShallow } from 'zustand/react/shallow'
 import { useModal } from '../../hooks/useModal'
-import { colleges } from '../../consts/colleges';
+import { emailByCollege } from '../../consts/emailByCollege';
 import { Filter } from '../Filter'
 import { CreatePost } from '../CreatePost'
 import { Modal } from '../Modal'
 import { Close } from '../Icons/Close'
+import { Thrash } from '../Icons/Thrash'
 import { Tooltip } from '../Tooltip';
 import { parseDate } from '../../utils/parseDate'
 import './Posts.css'
@@ -20,12 +21,16 @@ export function Posts() {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [filter, setFilter] = useState('Latest')
+    const [postToDelete, setPostToDelete] = useState(null);
     const { searchSelectedItem, user } = useStore(
         useShallow((state) => ({
             searchSelectedItem: state.searchSelectedItem,
             user: state.user,
         }))
     );
+
+    const userEmailDomain = user?.email.split('@')[1]
+    const selectedEmailDomain = emailByCollege[searchSelectedItem];
 
     useEffect(() => {
         if (!searchSelectedItem) {
@@ -34,11 +39,9 @@ export function Posts() {
         }
 
         const fetchPosts = async () => {
-            const domain = colleges[searchSelectedItem];
-
             try {
                 setLoading(true)
-                const response = await fetch(`http://localhost:5001/posts/${domain}`,
+                const response = await fetch(`http://localhost:5001/posts/${selectedEmailDomain}`,
                     {
                         method: 'GET',
                         headers: {
@@ -63,6 +66,61 @@ export function Posts() {
         fetchPosts()
     }, [searchSelectedItem])
 
+    const handleDelete = async (postId) => {
+        try {
+            const response = await fetch(`http://localhost:5001/posts/${postId}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete post');
+            } else {
+                closeDeletePostModal()
+            }
+
+            setPosts(posts.filter((post) => post.postId !== postId));
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    const openDeletePostModal = (postId) => {
+        setPostToDelete(postId);
+        toggleModal();
+    };
+
+    const closeDeletePostModal = () => {
+        toggleModal();
+        setPostToDelete(null);
+    };
+
+    const confirmDelete = () => {
+        if (postToDelete !== null) {
+            handleDelete(postToDelete);
+        }
+    };
+
+    const tooltipMessage = !user
+        ? 'You must be logged in to post'
+        : userEmailDomain !== selectedEmailDomain && 'You can only post in your college';
+
+    const isNewPostDisabled = !user
+        ? true
+        : userEmailDomain !== selectedEmailDomain ? true : false;
+
+    const modalContent = !postToDelete ? (
+        <CreatePost />
+    ) : (
+        <div className="delete-post-modal">
+            <h2>Delete Post</h2>
+            <p>Are you sure you want to delete this post?</p>
+            <div className="modal-buttons">
+                <button onClick={() => confirmDelete()}>Yes</button>
+                <button onClick={() => closeDeletePostModal()}>No</button>
+            </div>
+        </div>
+    );
+
     if (loading) return <p>Loading posts...</p>
     if (error) return <p>{error}</p>
 
@@ -70,9 +128,12 @@ export function Posts() {
         <section>
             <div className="post-header">
                 <h2 className="post-headline">{filter} Posts</h2>
-                <Tooltip showTooltip={!!user} message="You must be logged in to post">
+                <Tooltip
+                    showTooltip={isNewPostDisabled}
+                    message={tooltipMessage}
+                >
                     <button
-                        disabled={!user ? true : false}
+                        disabled={isNewPostDisabled}
                         className="new-post"
                         onClick={toggleModal}
                     >
@@ -83,10 +144,11 @@ export function Posts() {
             <Filter setFilter={setFilter} />
             <ul className="post-list">
                 {
-                    latestPosts.map(post => {
+                    latestPosts.length === 0 ? (
+                        <p>No posts yet</p>
+                    ) : latestPosts.map(post => {
                         const postDate = parseDate(post.createdAt);
                         const timeAgo = formatDistanceToNow(postDate, { addSuffix: true });
-
 
                         return (
                             <li className="post-item" key={post.postId}>
@@ -97,6 +159,14 @@ export function Posts() {
                                             className="time"
                                         >{timeAgo}</span>
                                     </p>
+                                    {user && user.username === post.username && (
+                                        <button
+                                            className="delete-icon"
+                                            onClick={() => openDeletePostModal(post.postId)}
+                                        >
+                                            <Thrash />
+                                        </button>
+                                    )}
                                 </div>
                                 <Link
                                     className="post-title"
@@ -112,8 +182,8 @@ export function Posts() {
 
             {
                 isModalOpen && (
-                    <Modal toggleModal={toggleModal}>
-                        <CreatePost />
+                    <Modal toggleModal={closeDeletePostModal}>
+                        {modalContent}
                     </Modal>
                 )
             }

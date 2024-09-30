@@ -50,7 +50,6 @@ export function Header() {
                 </Link>
                 <nav className="nav">
                     <Link to='/'>Home</Link>
-                    {user && <Link to={`/user/${user.username}/posts`}>My Posts</Link>}
                 </nav>
                 <Search />
                 {user ? (

@@ -10,10 +10,10 @@ export function Login({ login, errorLogin }) {
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
-    const { user, setUser } = useStore(
+    const { setUser } = useStore(
         useShallow((state) => ({
-            user: state.user,
             setUser: state.setUser,
+            searchSelectedItem: state.searchSelectedItem,
         }))
     );
 

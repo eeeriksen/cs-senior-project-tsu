@@ -50,6 +50,32 @@
     border-radius: 8px;
     background: white;
     padding: 16px 16px 0;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+        box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-posts {
+        padding: 34px 8px;
+    }
+
+    .delete-icon {
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        svg {
+            color: var(--primary);
+
+            &:hover {
+                color: var(--dark);
+            }
+        }
+    }
 
     .post-data {
         display: flex;
@@ -72,6 +98,24 @@
             margin-bottom: 2px;
             width: 100%;
         }
+
+        .delete-icon {
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            padding: 0;
+
+            svg {
+                color: var(--primary);
+
+                &:hover {
+                    color: var(--dark);
+                }
+            }
+        }
     }
 
     .post-title {
@@ -79,6 +123,10 @@
         font-size: 22px;
         height: 68px;
         color: var(--dark);
+
+        p {
+            font-weight: 700;
+        }
 
         &:hover {
             color: var(--primary);
