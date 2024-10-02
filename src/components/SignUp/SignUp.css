@@ -115,6 +115,7 @@
 
     .error-text {
         color: var(--error);
+        width: min-content;
     }
 }
 
@@ -132,7 +133,7 @@
     }
 }
 
-@media (max-width: 468px) {
+@media (max-width: 480px) {
     .signup-form {
         width: 100%;
         padding: 24px;

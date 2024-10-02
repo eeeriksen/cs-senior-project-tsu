@@ -1,11 +1,11 @@
 import React from 'react';
 import './Tooltip.css';
 
-export function Tooltip({ children, message }) {
+export function Tooltip({ children, message, showTooltip }) {
     return (
         <div className="tooltip-container">
             {children}
-            <span className="tooltip-text">{message}</span>
+            {showTooltip && <span className="tooltip-text">{message}</span>}
         </div>
     );
 }

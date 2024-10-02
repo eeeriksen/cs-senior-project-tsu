@@ -58,6 +58,7 @@
 
     .error-text {
         color: var(--error);
+        width: min-content;
     }
 }
 

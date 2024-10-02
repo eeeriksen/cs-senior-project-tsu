@@ -22,9 +22,10 @@ export function Posts() {
     const [error, setError] = useState(null)
     const [filter, setFilter] = useState('Latest')
     const [postToDelete, setPostToDelete] = useState(null);
-    const { searchSelectedItem, user } = useStore(
+    const { searchSelectedItem, setSearchSelectedItem, user } = useStore(
         useShallow((state) => ({
             searchSelectedItem: state.searchSelectedItem,
+            setSearchSelectedItem: state.setSearchSelectedItem,
             user: state.user,
         }))
     );
@@ -57,6 +58,7 @@ export function Posts() {
                 setLatestPosts(data)
             } catch (error) {
                 setError('Failed to fetch posts')
+                setSearchSelectedItem(null)
                 console.error('Error fetching posts:', error)
             } finally {
                 setLoading(false)
@@ -78,7 +80,7 @@ export function Posts() {
                 closeDeletePostModal()
             }
 
-            setPosts(posts.filter((post) => post.postId !== postId));
+            setLatestPosts(latestPosts.filter((post) => post.postId !== postId));
         } catch (err) {
             setError(err.message);
         }
@@ -100,6 +102,10 @@ export function Posts() {
         }
     };
 
+    const updateLatestPosts = (newPost) => {
+        setLatestPosts([newPost, ...latestPosts]);
+    }
+
     const tooltipMessage = !user
         ? 'You must be logged in to post'
         : userEmailDomain !== selectedEmailDomain && 'You can only post in your college';
@@ -109,14 +115,14 @@ export function Posts() {
         : userEmailDomain !== selectedEmailDomain ? true : false;
 
     const modalContent = !postToDelete ? (
-        <CreatePost />
+        <CreatePost closeModal={toggleModal} updateLatestPosts={updateLatestPosts} />
     ) : (
         <div className="delete-post-modal">
             <h2>Delete Post</h2>
             <p>Are you sure you want to delete this post?</p>
             <div className="modal-buttons">
-                <button onClick={() => confirmDelete()}>Yes</button>
-                <button onClick={() => closeDeletePostModal()}>No</button>
+                <button className="confirm-button" onClick={() => confirmDelete()}>Yes, Delete</button>
+                <button className="post-comment" onClick={() => closeDeletePostModal()}>Cancel</button>
             </div>
         </div>
     );

@@ -4,16 +4,18 @@ import { useShallow } from 'zustand/react/shallow'
 import { useStore } from '../../store'
 import { Logo } from '../Icons/Logo'
 import './Login.css'
+import { collegeByEmail } from '../../consts/collegeByEmail'
 
 export function Login({ login, errorLogin }) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
-    const { setUser } = useStore(
+    const { setUser, setSearchSelectedItem } = useStore(
         useShallow((state) => ({
             setUser: state.setUser,
             searchSelectedItem: state.searchSelectedItem,
+            setSearchSelectedItem: state.setSearchSelectedItem,
         }))
     );
 
@@ -35,6 +37,13 @@ export function Login({ login, errorLogin }) {
             const data = await response.json()
 
             if (response.status === 200) {
+                const { email } = data.user
+                const domain = email.split('@')[1]
+                const selectedEmailDomain = collegeByEmail[domain]
+                console.log(selectedEmailDomain)
+                if (selectedEmailDomain !== "") {
+                    setSearchSelectedItem(selectedEmailDomain)
+                }
                 setSuccess(true)
                 setUser({ username: data.user.username, ...data.user });
                 navigate("/")

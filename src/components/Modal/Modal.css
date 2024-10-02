@@ -8,6 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 16px;
 }
 
 .modal-content {
@@ -17,6 +18,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    width: auto;
 }
 
 .modal-close {

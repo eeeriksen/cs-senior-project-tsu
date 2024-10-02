@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow'
-import { colleges } from '../../consts/colleges';
+import { emailByCollege } from '../../consts/emailByCollege';
 import { useStore } from '../../store';
 import { Close } from '../Icons/Close';
 import { School } from '../Icons/School';
@@ -27,7 +27,7 @@ export function Search() {
                 setResults([]);
                 setShowResults(false);
             }
-        }, 250);
+        }, 240);
 
         return () => clearTimeout(handler);
     }, [query]);
@@ -47,7 +47,7 @@ export function Search() {
 
     const fetchData = async (query) => {
         setTimeout(() => {
-            const mockResults = Object.keys(colleges).filter((collegeName) =>
+            const mockResults = Object.keys(emailByCollege).filter((collegeName) =>
                 collegeName.toLowerCase().includes(query.toLowerCase())
             );
 

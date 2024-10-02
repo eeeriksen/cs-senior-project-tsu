@@ -133,3 +133,54 @@
         }
     }
 }
+
+.delete-post-modal {
+    h2 {
+        margin-top: 0;
+    }
+
+    .modal-buttons {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+
+    .post-comment {
+        font-size: 16px;
+        height: 34px;
+        line-height: 16px;
+        margin: 0;
+        padding: 0 12px;
+        color: white;
+        background-color: var(--primary);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:disabled {
+            background-color: var(--primary-light);
+            cursor: not-allowed;
+        }
+
+        &:hover {
+            background-color: var(--dark);
+        }
+    }
+
+    .confirm-button {
+        font-size: 16px;
+        height: 34px;
+        line-height: 16px;
+        margin: 0;
+        padding: 0 12px;
+        color: var(--dark);
+        border: 1px solid var(--primary);
+        background-color: var(--primary--light);
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--primary-light);
+        }
+    }
+}

@@ -13,6 +13,7 @@ import "./PostView.css";
 
 export function PostView() {
     const location = useLocation();
+    const navigate = useNavigate();
     const { postId } = useParams();
     const { user } = useStore(
         useShallow((state) => ({
@@ -23,9 +24,9 @@ export function PostView() {
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [loadingPosts, setLoadingPosts] = useState(true);
+    const [loadingDeleteComment, setLoadingDeleteComment] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
     const { isModalOpen, toggleModal } = useModal();
     const [commentToDelete, setCommentToDelete] = useState(null);
     const [isAddingComment, setIsAddingComment] = useState(false);
@@ -33,7 +34,7 @@ export function PostView() {
     useEffect(() => {
         if (postClicked) {
             setPost(postClicked);
-            setLoading(false);
+            setLoadingPosts(false);
             return
         }
 
@@ -46,7 +47,7 @@ export function PostView() {
             } catch (err) {
                 setError(err.message);
             } finally {
-                setLoading(false);
+                setLoadingPosts(false);
             }
         };
         fetchPost();
@@ -65,7 +66,7 @@ export function PostView() {
             } catch (err) {
                 setError(err.message);
             } finally {
-                setLoading(false);
+                setLoadingPosts(false);
             }
         };
 
@@ -98,9 +99,17 @@ export function PostView() {
 
     const deleteComment = async (commentId) => {
         try {
+            setLoadingDeleteComment(true);
             const response = await fetch(`http://localhost:5001/comments/${commentId}`, { method: 'DELETE' });
-            if (!response.ok) throw new Error('Failed to delete comment');
-            setComments(comments.filter(comment => comment.commentId !== commentId));
+            if (!response.ok) {
+                throw new Error('Failed to delete comment');
+            } else {
+                setComments(comments.filter(comment => comment.commentId !== commentId));
+                toast('Comment deleted successfully');
+                closeModal();
+                setLoadingDeleteComment(false);
+            }
+
         } catch (err) {
             setError(err.message);
         }
@@ -110,14 +119,15 @@ export function PostView() {
         try {
             const response = await fetch(`http://localhost:5001/posts/${postId}`, { method: 'DELETE' });
             if (!response.ok) throw new Error('Failed to delete post');
-            navigate('/posts');
+            toast('Post deleted successfully');
+            navigate('/');
         } catch (err) {
             setError(err.message);
         }
     };
 
-    const openModal = (postId) => {
-        setCommentToDelete(postId);
+    const deleteCommentModal = (commentId) => {
+        setCommentToDelete(commentId);
         toggleModal();
     };
 
@@ -128,7 +138,9 @@ export function PostView() {
 
     const confirmDelete = () => {
         if (commentToDelete !== null) {
-            handleDelete(commentToDelete);
+            deleteComment(commentToDelete);
+        } else {
+            deletePost();
         }
     };
 
@@ -137,11 +149,10 @@ export function PostView() {
         navigate('/');
     }
 
-    console.log(post);
     const postDate = post && parseDate(post.createdAt);
     const timeAgo = post && formatDistanceToNow(postDate, { addSuffix: true });
 
-    if (loading) return <p>Loading...</p>;
+    if (loadingPosts) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     if (post) return (
@@ -156,7 +167,7 @@ export function PostView() {
                         className="time"
                     >{timeAgo}</span>
                     {user && user.username === post.username && (
-                        <button onClick={deletePost}>
+                        <button onClick={toggleModal}>
                             <Thrash />
                         </button>
                     )}
@@ -183,7 +194,7 @@ export function PostView() {
                                     {user && user.username === comment.username && (
                                         <button
                                             className="remove-comment"
-                                            onClick={() => openModal(post.postId)}
+                                            onClick={() => deleteCommentModal(comment.commentId)}
                                         >
                                             <Thrash />
                                         </button>
@@ -207,7 +218,7 @@ export function PostView() {
             {isModalOpen && (
                 <Modal toggleModal={toggleModal}>
                     <>
-                        <p>Are you sure you want to delete this post?</p>
+                        <p>Are you sure you want to delete this {commentToDelete !== null ? "comment" : "post"}?</p>
                         <div className="modal-buttons">
                             <button className="confirm-button" onClick={confirmDelete}>Yes, Delete</button>
                             <button className="post-comment" onClick={toggleModal}>Cancel</button>

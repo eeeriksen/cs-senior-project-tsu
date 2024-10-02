@@ -4,15 +4,15 @@ import { toast } from 'sonner';
 import { useStore } from '../../store'
 import './CreatePost.css';
 
-export const CreatePost = () => {
+export const CreatePost = ({ closeModal, updateLatestPosts }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
+    const [loading, setLoading] = useState(false);
     const { user } = useStore(
         useShallow((state) => ({
             user: state.user,
         }))
     );
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,6 +35,7 @@ export const CreatePost = () => {
         };
 
         try {
+            setLoading(true);
             const response = await fetch('http://localhost:5001/create-post', {
                 method: 'POST',
                 headers: {
@@ -43,10 +44,15 @@ export const CreatePost = () => {
                 body: JSON.stringify(postData),
             });
 
+            const data = await response.json();
+
             if (response.ok) {
                 setTitle('');
                 setBody('');
                 toast('Post created successfully.');
+                updateLatestPosts(data.post)
+                setLoading(false);
+                closeModal();
             } else {
                 console.error('Failed to create post.');
             }
@@ -56,7 +62,7 @@ export const CreatePost = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="create-post-form" onSubmit={handleSubmit}>
             <div>
                 <label>Title</label>
                 <input
@@ -74,7 +80,7 @@ export const CreatePost = () => {
                     required
                 ></textarea>
             </div>
-            <button type="submit">Create Post</button>
+            <button disabled={loading} className="submit-button" type="submit">Post</button>
         </form>
     );
 };
