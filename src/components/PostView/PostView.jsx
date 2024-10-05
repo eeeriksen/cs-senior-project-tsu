@@ -73,7 +73,7 @@ export function PostView() {
         fetchComments();
     }, [postId])
 
-    const addComment = async () => {
+    const createComment = async () => {
         if (!newComment.trim()) return;
 
         const commentId = crypto.randomUUID();
@@ -89,7 +89,7 @@ export function PostView() {
             if (!response.ok) throw new Error('Failed to add comment');
             const newCommentObj = await response.json();
             toast(newCommentObj.message);
-            setComments([...comments, commentData]);
+            setComments([...comments, newCommentObj.comment]);
             setNewComment('');
             setIsAddingComment(false);
         } catch (err) {
@@ -211,7 +211,7 @@ export function PostView() {
                         onChange={(e) => setNewComment(e.target.value)}
                         placeholder="Add a comment"
                     />
-                    <button className="post-comment" disabled={isAddingComment || newComment === ""} onClick={addComment}>Post Comment</button>
+                    <button className="post-comment" disabled={isAddingComment || newComment === ""} onClick={createComment}>Post Comment</button>
                 </div>}
             </section>
             {isModalOpen && (
