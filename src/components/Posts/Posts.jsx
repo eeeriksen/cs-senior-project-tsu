@@ -42,7 +42,7 @@ export function Posts() {
         const fetchPosts = async () => {
             try {
                 setLoading(true)
-                const response = await fetch(`http://localhost:5001/posts/${selectedEmailDomain}`,
+                const response = await fetch(`http://localhost:5001/post/college/${selectedEmailDomain}`,
                     {
                         method: 'GET',
                         headers: {
@@ -70,7 +70,7 @@ export function Posts() {
 
     const handleDelete = async (postId) => {
         try {
-            const response = await fetch(`http://localhost:5001/posts/${postId}`, {
+            const response = await fetch(`http://localhost:5001/post/${postId}`, {
                 method: 'DELETE',
             });
 

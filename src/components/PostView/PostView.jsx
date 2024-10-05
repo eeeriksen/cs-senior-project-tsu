@@ -56,7 +56,7 @@ export function PostView() {
     useState(() => {
         const fetchComments = async () => {
             try {
-                const response = await fetch(`http://localhost:5001/posts/${postId}/comments`);
+                const response = await fetch(`http://localhost:5001/comment/${postId}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch comments');
                 }
@@ -81,7 +81,7 @@ export function PostView() {
 
         try {
             setIsAddingComment(true);
-            const response = await fetch(`http://localhost:5001/posts/${postId}/comments`, {
+            const response = await fetch(`http://localhost:5001/comment/${postId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(commentData),
@@ -100,7 +100,7 @@ export function PostView() {
     const deleteComment = async (commentId) => {
         try {
             setLoadingDeleteComment(true);
-            const response = await fetch(`http://localhost:5001/comments/${commentId}`, { method: 'DELETE' });
+            const response = await fetch(`http://localhost:5001/comment/${commentId}`, { method: 'DELETE' });
             if (!response.ok) {
                 throw new Error('Failed to delete comment');
             } else {
@@ -117,7 +117,7 @@ export function PostView() {
 
     const deletePost = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/posts/${postId}`, { method: 'DELETE' });
+            const response = await fetch(`http://localhost:5001/post/${postId}`, { method: 'DELETE' });
             if (!response.ok) throw new Error('Failed to delete post');
             toast('Post deleted successfully');
             navigate('/');
@@ -145,7 +145,6 @@ export function PostView() {
     };
 
     const handleBackButton = () => {
-        console.log(1)
         navigate('/');
     }
 

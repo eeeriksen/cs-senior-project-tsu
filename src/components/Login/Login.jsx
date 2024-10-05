@@ -26,7 +26,7 @@ export function Login({ login, errorLogin }) {
         setError(null)
 
         try {
-            const response = await fetch('http://localhost:5001/login', {
+            const response = await fetch('http://localhost:5001/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export function Login({ login, errorLogin }) {
                 const { email } = data.user
                 const domain = email.split('@')[1]
                 const selectedEmailDomain = collegeByEmail[domain]
-                console.log(selectedEmailDomain)
+
                 if (selectedEmailDomain !== "") {
                     setSearchSelectedItem(selectedEmailDomain)
                 }

@@ -36,7 +36,7 @@ export const CreatePost = ({ closeModal, updateLatestPosts }) => {
 
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5001/create-post', {
+            const response = await fetch('http://localhost:5001/post/create-post', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

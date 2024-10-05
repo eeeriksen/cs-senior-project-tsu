@@ -86,7 +86,6 @@ export function Search() {
                             <ul>
                                 {results.map((college) => (
                                     <div
-                                        key={college}
                                         className="college-item"
                                         key={college}
                                         onClick={(e) => handleSelect(e, college)}
