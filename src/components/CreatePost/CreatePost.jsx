@@ -14,7 +14,7 @@ export const CreatePost = ({ closeModal, updateLatestPosts }) => {
         }))
     );
 
-    const handleSubmit = async (e) => {
+    const handleCreatePost = async (e) => {
         e.preventDefault();
 
         if (!user) {
@@ -62,7 +62,7 @@ export const CreatePost = ({ closeModal, updateLatestPosts }) => {
     };
 
     return (
-        <form className="create-post-form" onSubmit={handleSubmit}>
+        <form className="create-post-form" onSubmit={handleCreatePost}>
             <div>
                 <label>Title</label>
                 <input

@@ -3,8 +3,8 @@ import { Link, useNavigate, Navigate } from 'react-router-dom'
 import { useShallow } from 'zustand/react/shallow'
 import { useStore } from '../../store'
 import { Logo } from '../Icons/Logo'
-import './Login.css'
 import { collegeByEmail } from '../../consts/collegeByEmail'
+import './Login.css'
 
 export function Login({ login, errorLogin }) {
     const [username, setUsername] = useState('')
