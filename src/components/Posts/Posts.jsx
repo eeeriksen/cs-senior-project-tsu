@@ -47,7 +47,6 @@ export function Posts() {
     const fetchPosts = async () => {
         try {
             setLoading(true)
-
             const response = await fetch(`http://localhost:5001/post/college/${selectedEmailDomain}`,
                 {
                     method: 'GET',
