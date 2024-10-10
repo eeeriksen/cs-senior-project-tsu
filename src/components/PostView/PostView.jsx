@@ -15,16 +15,17 @@ export function PostView() {
     const location = useLocation();
     const navigate = useNavigate();
     const { postId } = useParams();
-    const { user } = useStore(
+    const { user, posts, addCommentsToPost } = useStore(
         useShallow((state) => ({
             user: state.user,
+            posts: state.posts,
+            addCommentsToPost: state.addCommentsToPost,
         }))
     );
-    const { postClicked } = location.state || {};
     const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
-    const [loadingPosts, setLoadingPosts] = useState(true);
+    const [loadingPost, setLoadingPost] = useState(true);
     const [loadingDeleteComment, setLoadingDeleteComment] = useState(true);
     const [error, setError] = useState(null);
     const { isModalOpen, toggleModal } = useModal();
@@ -32,9 +33,10 @@ export function PostView() {
     const [isAddingComment, setIsAddingComment] = useState(false);
 
     useEffect(() => {
-        if (postClicked) {
-            setPost(postClicked);
-            setLoadingPosts(false);
+        if (posts.length !== 0 && posts.some(post => post.postId === postId)) {
+            const post = posts.find(post => post.postId === postId)
+            setPost(post)
+            setLoadingPost(false)
             return
         }
 
@@ -47,13 +49,17 @@ export function PostView() {
             } catch (err) {
                 setError(err.message);
             } finally {
-                setLoadingPosts(false);
+                setLoadingPost(false);
             }
         };
         fetchPost();
-    }, [postId]);
+    }, [postId, posts]);
 
     useState(() => {
+        if (post?.comments && post.comments.length > 0) {
+            setComments(post.comments);
+            return;
+        }
         const fetchComments = async () => {
             try {
                 const response = await fetch(`http://localhost:5001/comment/${postId}`);
@@ -63,15 +69,16 @@ export function PostView() {
 
                 const data = await response.json();
                 setComments(data);
+                addCommentsToPost(postId, data)
             } catch (err) {
                 setError(err.message);
             } finally {
-                setLoadingPosts(false);
+                setLoadingPost(false);
             }
         };
 
         fetchComments();
-    }, [postId])
+    }, [post, loadingPost])
 
     const createComment = async () => {
         if (!newComment.trim()) return;
@@ -151,7 +158,7 @@ export function PostView() {
     const postDate = post && parseDate(post.createdAt);
     const timeAgo = post && formatDistanceToNow(postDate, { addSuffix: true });
 
-    if (loadingPosts) return <p>Loading...</p>;
+    if (loadingPost) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     if (post) return (

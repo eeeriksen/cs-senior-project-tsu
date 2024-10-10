@@ -6,6 +6,7 @@ header {
     left: 0;
     width: 100%;
     background-color: white;
+    z-index: 1000;
 }
 
 .header-box {
@@ -25,7 +26,7 @@ header {
     svg {
         width: 32px;
         height: 32px;
-        color: var(--dark);
+        color: var(--secondary);
     }
 }
 
@@ -38,7 +39,7 @@ header {
 .voices-text {
     margin-bottom: 5px;
     font-size: 30px;
-    color: var(--dark);
+    color: var(--secondary);
 }
 
 .voices-text {
