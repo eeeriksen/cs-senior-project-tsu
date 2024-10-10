@@ -26,7 +26,9 @@ export function Posts() {
         setSearchSelectedItem,
         user,
         posts,
-        setPosts
+        setPosts,
+        globalPosts,
+        setUniversityPosts,
     } = useStore(
         useShallow((state) => ({
             searchSelectedItem: state.searchSelectedItem,
@@ -34,6 +36,8 @@ export function Posts() {
             user: state.user,
             posts: state.posts,
             setPosts: state.setPosts,
+            globalPosts: state.globalPosts,
+            setUniversityPosts: state.setUniversityPosts,
         }))
     );
 
@@ -43,6 +47,7 @@ export function Posts() {
     const fetchPosts = async () => {
         try {
             setLoading(true)
+
             const response = await fetch(`http://localhost:5001/post/college/${selectedEmailDomain}`,
                 {
                     method: 'GET',
@@ -55,7 +60,10 @@ export function Posts() {
             if (!response.ok) {
                 throw new Error('Network response was not ok')
             }
+
             const data = await response.json()
+
+            setUniversityPosts(selectedEmailDomain, data);
             setPosts(data)
         } catch (error) {
             setError('Failed to fetch posts')
@@ -68,6 +76,11 @@ export function Posts() {
 
     useEffect(() => {
         if (!searchSelectedItem || posts.length > 0) {
+            return
+        }
+
+        if (globalPosts[selectedEmailDomain]) {
+            setPosts(globalPosts[selectedEmailDomain])
             return
         }
 
@@ -113,7 +126,9 @@ export function Posts() {
     }
 
     const refreshPosts = () => {
-        console.log('refreshing posts')
+        if (searchSelectedItem) {
+            fetchPosts();
+        }
     }
 
     const tooltipMessage = !user
@@ -150,7 +165,7 @@ export function Posts() {
                 <div className="post-header">
                     <h2 className="post-headline">
                         {filter} Posts
-                        <button onClick={fetchPosts}>
+                        <button onClick={refreshPosts}>
                             <Refresh />
                         </button>
                     </h2>
