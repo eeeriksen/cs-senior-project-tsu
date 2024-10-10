@@ -8,19 +8,22 @@ import './Header.css'
 
 export function Header() {
     const location = useLocation()
-    const { user, setUser } = useStore(
+    const { user, setUser, setSearchSelectedItem } = useStore(
         useShallow((state) => ({
             user: state.user,
             setUser: state.setUser,
+            setSearchSelectedItem: state.setSearchSelectedItem,
         }))
     );
 
     const handleLogout = () => {
         setUser(null)
+        setSearchSelectedItem(null)
     }
 
     const isSignup = location.pathname !== '/signup'
     const isLogin = location.pathname !== '/login'
+    const isHome = location.pathname !== '/'
 
     const buttons = !user && !isSignup ? (
         <Link to='/login'>
@@ -49,7 +52,7 @@ export function Header() {
                     </div>
                 </Link>
                 <nav className="nav">
-                    <Link to='/'>Home</Link>
+                    {(isHome && !user) && <Link to='/'>Home</Link>}
                 </nav>
                 <Search />
                 {user ? (

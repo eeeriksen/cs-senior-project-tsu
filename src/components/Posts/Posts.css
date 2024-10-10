@@ -28,6 +28,23 @@
 
 .post-headline {
     margin-top: 0;
+
+    button {
+        background-color: transparent;
+        border: none;
+        color: var(--primary);
+        cursor: pointer;
+        margin-left: 16px;
+        padding: 0;
+
+        &:hover {
+            color: var(--dark);
+        }
+
+        svg {
+            font-weight: 700;
+        }
+    }
 }
 
 .post-list {
@@ -122,7 +139,7 @@
         text-decoration: none;
         font-size: 22px;
         height: 68px;
-        color: var(--dark);
+        color: var(--secondary);
 
         p {
             font-weight: 700;

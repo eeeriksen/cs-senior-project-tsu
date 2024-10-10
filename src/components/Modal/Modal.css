@@ -9,6 +9,7 @@
     justify-content: center;
     align-items: center;
     padding: 16px;
+    z-index: 1100;
 }
 
 .modal-content {

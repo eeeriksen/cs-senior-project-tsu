@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { useStore } from '../../store'
 import './CreatePost.css';
 
-export const CreatePost = ({ closeModal, updateLatestPosts }) => {
+export const CreatePost = ({ closeModal, updatePosts }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [loading, setLoading] = useState(false);
@@ -50,7 +50,7 @@ export const CreatePost = ({ closeModal, updateLatestPosts }) => {
                 setTitle('');
                 setBody('');
                 toast('Post created successfully.');
-                updateLatestPosts(data.post)
+                updatePosts(data.post)
                 setLoading(false);
                 closeModal();
             } else {

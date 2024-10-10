@@ -1,3 +1,188 @@
 .home {
-    padding: 34px 16px;
+    padding: 16px 16px 0;
+    background: transparent;
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 34px;
+    }
+
+    main {
+        flex: 1;
+    }
+
+    section {
+        padding: 4rem 0;
+    }
+
+    .hero {
+        background-color: white;
+        text-align: center;
+        padding: 6rem 0;
+
+        p {
+            font-size: 20px;
+        }
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-top: 0;
+        margin-bottom: 2rem;
+        color: var(--secondary);
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn.primary {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .btn.secondary {
+        background-color: var(--secondary);
+        color: white;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+    }
+
+    .cta-buttons {
+        margin-top: 2rem;
+    }
+
+    .cta-buttons .btn {
+        margin: 0 0.5rem;
+    }
+
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        gap: 2rem;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card svg {
+        width: 32px;
+        height: 32px;
+        color: var(--primary);
+    }
+
+    .card-meta {
+        font-size: 0.9rem;
+        color: var(--secondary);
+        margin-bottom: 1rem;
+    }
+
+    .input-group {
+        display: flex;
+        margin-top: 1rem;
+    }
+
+    .input-group input {
+        flex: 1;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 1px solid var(--primary-light);
+        border-radius: 4px 0 0 4px;
+    }
+
+    .input-group .btn {
+        border-radius: 0 4px 4px 0;
+    }
+
+    .recent-discussions,
+    .why-use {
+        background-color: var(--bg-light);
+        border-left: 1px solid var(--primary-light);
+        border-right: 1px solid var(--primary-light);
+    }
+
+    .start-discussion,
+    .about-platform {
+        background-color: white;
+    }
+
+    footer {
+        background-color: var(--primary);
+        color: white;
+        padding: 24px 34px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            line-height: 32px;
+        }
+    }
+
+    footer a {
+        color: white;
+        text-decoration: none;
+        margin-left: 32px;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .card-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .input-group {
+            flex-direction: column;
+        }
+
+        .input-group input,
+        .input-group .btn {
+            width: 100%;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            padding: 0 16px;
+        }
+    }
 }
