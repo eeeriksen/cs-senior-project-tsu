@@ -25,6 +25,7 @@ export function Login({ login, errorLogin }) {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
+        console.log({ apiUrl })
         e.preventDefault()
         setError(null)
         setLoading(true)
