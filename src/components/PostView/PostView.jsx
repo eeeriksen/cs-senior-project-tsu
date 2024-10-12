@@ -11,6 +11,8 @@ import { Thrash } from '../Icons/Thrash';
 import { BackArrow } from '../Icons/BackArrow';
 import "./PostView.css";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export function PostView() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -42,7 +44,7 @@ export function PostView() {
 
         const fetchPost = async () => {
             try {
-                const response = await fetch(`http://localhost:5001/post/${postId}`);
+                const response = await fetch(`${apiUrl}/post/${postId}`);
                 if (!response.ok) throw new Error('Failed to fetch post');
                 const data = await response.json();
                 setPost(data[0]);
@@ -62,7 +64,7 @@ export function PostView() {
         }
         const fetchComments = async () => {
             try {
-                const response = await fetch(`http://localhost:5001/comment/${postId}`);
+                const response = await fetch(`${apiUrl}/comment/${postId}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch comments');
                 }
@@ -88,7 +90,7 @@ export function PostView() {
 
         try {
             setIsAddingComment(true);
-            const response = await fetch(`http://localhost:5001/comment/${postId}`, {
+            const response = await fetch(`${apiUrl}/comment/${postId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(commentData),
@@ -107,7 +109,7 @@ export function PostView() {
     const deleteComment = async (commentId) => {
         try {
             setLoadingDeleteComment(true);
-            const response = await fetch(`http://localhost:5001/comment/${commentId}`, { method: 'DELETE' });
+            const response = await fetch(`${apiUrl}/comment/${commentId}`, { method: 'DELETE' });
             if (!response.ok) {
                 throw new Error('Failed to delete comment');
             } else {
@@ -124,7 +126,7 @@ export function PostView() {
 
     const deletePost = async () => {
         try {
-            const response = await fetch(`http://localhost:5001/post/${postId}`, { method: 'DELETE' });
+            const response = await fetch(`${apiUrl}/post/${postId}`, { method: 'DELETE' });
             if (!response.ok) throw new Error('Failed to delete post');
             toast('Post deleted successfully');
             navigate('/');

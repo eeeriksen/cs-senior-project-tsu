@@ -7,6 +7,8 @@ import { EyeOff } from '../Icons/EyeOff'
 import { collegeByEmail } from '../../consts/collegeByEmail';
 import './SignUp.css'
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export function SignUp() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -46,7 +48,7 @@ export function SignUp() {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/user/signup', {
+            const response = await fetch(`${apiUrl}/user/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

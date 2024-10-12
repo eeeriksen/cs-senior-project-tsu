@@ -6,11 +6,14 @@ import { Logo } from '../Icons/Logo'
 import { collegeByEmail } from '../../consts/collegeByEmail'
 import './Login.css'
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export function Login({ login, errorLogin }) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
+    const [loading, setLoading] = useState(false)
     const { setUser, setSearchSelectedItem } = useStore(
         useShallow((state) => ({
             setUser: state.setUser,
@@ -24,9 +27,9 @@ export function Login({ login, errorLogin }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError(null)
-
+        setLoading(true)
         try {
-            const response = await fetch('http://localhost:5001/user/login', {
+            const response = await fetch(`${apiUrl}/user/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -45,10 +48,12 @@ export function Login({ login, errorLogin }) {
                     setSearchSelectedItem(selectedEmailDomain)
                 }
                 setSuccess(true)
+                setLoading(false)
                 setUser({ username: data.user.username, ...data.user });
                 navigate("/")
             } else {
                 setError(data.message)
+                setLoading(false)
             }
         } catch (err) {
             setError('Error: ' + err)
@@ -78,7 +83,7 @@ export function Login({ login, errorLogin }) {
                     onChange={(e) => setPassword(e.target.value)}
                     onKeyUp={(e) => handleKeyUp(e)}
                 />
-                <button type='submit'>Login</button>
+                <button disabled={loading} type='submit'>Login</button>
                 {error && <p className="error-text">{error}</p>}
             </form>
             <p className="signup-text">Don't have an account? <Link className="signup-link" to="/signup">Sign up</Link></p>

@@ -3,6 +3,8 @@ import { useShallow } from 'zustand/react/shallow'
 import { toast } from 'sonner'
 import { useStore } from '../../store'
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const RecommendationForm = () => {
     const { user, setUser, setSearchSelectedItem } = useStore(
         useShallow((state) => ({
@@ -21,7 +23,7 @@ export const RecommendationForm = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/send-recommendation', {
+            const response = await fetch(`${apiUrl}/send-recommendation`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

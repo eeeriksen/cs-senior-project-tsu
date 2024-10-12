@@ -14,6 +14,8 @@ import { parseDate } from '../../utils/parseDate'
 import { RecommendationForm } from '../RecommendationForm'
 import './Posts.css'
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export function Posts() {
     const navigate = useNavigate()
     const { isModalOpen, toggleModal } = useModal();
@@ -47,7 +49,7 @@ export function Posts() {
     const fetchPosts = async () => {
         try {
             setLoading(true)
-            const response = await fetch(`http://localhost:5001/post/college/${selectedEmailDomain}`,
+            const response = await fetch(`${apiUrl}/post/college/${selectedEmailDomain}`,
                 {
                     method: 'GET',
                     headers: {
@@ -88,7 +90,7 @@ export function Posts() {
 
     const handleDelete = async (postId) => {
         try {
-            const response = await fetch(`http://localhost:5001/post/${postId}`, {
+            const response = await fetch(`${apiUrl}/post/${postId}`, {
                 method: 'DELETE',
             });
 

@@ -4,6 +4,8 @@ import { toast } from 'sonner';
 import { useStore } from '../../store'
 import './CreatePost.css';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const CreatePost = ({ closeModal, updatePosts }) => {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
@@ -36,7 +38,7 @@ export const CreatePost = ({ closeModal, updatePosts }) => {
 
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:5001/post/create-post', {
+            const response = await fetch(`${apiUrl}/post/create-post`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

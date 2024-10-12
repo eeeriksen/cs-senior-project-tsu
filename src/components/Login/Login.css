@@ -54,6 +54,11 @@
         &:hover {
             background-color: var(--secondary);
         }
+
+        &:disabled {
+            background-color: var(--primary-light);
+            cursor: not-allowed;
+        }
     }
 
     .error-text {
