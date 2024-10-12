@@ -49,15 +49,15 @@ export function Login({ login, errorLogin }) {
                     setSearchSelectedItem(selectedEmailDomain)
                 }
                 setSuccess(true)
-                setLoading(false)
                 setUser({ username: data.user.username, ...data.user });
                 navigate("/")
             } else {
                 setError(data.message)
-                setLoading(false)
             }
         } catch (err) {
             setError('Error: ' + err)
+        } finally {
+            setLoading(false)
         }
     }
 
