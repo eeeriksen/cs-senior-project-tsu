@@ -72,12 +72,14 @@ export function Login({ login, errorLogin }) {
                 <label>Username</label>
                 <input
                     type="text"
+                    name="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <label>Password</label>
                 <input
                     type="password"
+                    name="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     onKeyUp={(e) => handleKeyUp(e)}
