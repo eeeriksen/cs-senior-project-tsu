@@ -1,0 +1,44 @@
+.submit-recommendations {
+    padding: 64px 0;
+
+    form {
+
+        h2 {
+            color: var(--secondary);
+        }
+
+        .input-group {
+
+            textarea {
+                border-radius: 6px;
+                padding: 8px;
+                width: 100%;
+                font-family: system-ui;
+                font-size: 16px;
+                margin-bottom: 32px;
+                border: 2px solid var(--primary);
+                resize: vertical;
+                min-height: 120px;
+            }
+        }
+
+        .idea-button {
+            background-color: var(--primary);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--secondary);
+            }
+
+            &:disabled {
+                background-color: var(--primary-light);
+                cursor: not-allowed;
+            }
+        }
+    }
+}

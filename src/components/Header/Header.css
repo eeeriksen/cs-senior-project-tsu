@@ -78,7 +78,8 @@ header {
 }
 
 .signup-button,
-.login-button {
+.login-button,
+.logout-button {
     font-size: 16px;
     height: 34px;
     line-height: 16px;
@@ -92,6 +93,27 @@ header {
 
     &:hover {
         background-color: var(--secondary);
+    }
+}
+
+.logout-button {
+    min-width: 78px;
+}
+
+.account-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 40px;
+
+    svg {
+        width: 34px;
+        height: 34px;
+        color: var(--secondary);
+
+        &:hover {
+            color: var(--dark);
+        }
     }
 }
 

@@ -13,6 +13,7 @@ import { Layout } from './components/Layout/Layout'
 import { SignUp } from './components/SignUp'
 import { PostView } from './components/PostView'
 import { CreatePost } from './components/CreatePost'
+import { Account } from './components/Account'
 import { NotFound } from './components/NotFound'
 import { useShallow } from 'zustand/react/shallow'
 import { useStore } from './store'
@@ -44,6 +45,7 @@ export function App() {
                 { path: '/login', element: <Login /> },
                 { path: '/signup', element: <SignUp /> },
                 { path: '/posts/:postId', element: <PostView /> },
+                { path: '/account', element: <ProtectedRoute element={<Account />} /> },
                 { path: '*', element: <NotFound /> },
             ],
         },

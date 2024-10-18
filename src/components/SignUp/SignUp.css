@@ -34,12 +34,18 @@
 
     .aknowledge {
         font-size: 12px;
-        margin-top: 0px;
+        margin-top: 16px;
         margin-bottom: 24px;
 
         a {
             display: inline;
         }
+    }
+
+    .email-verify {
+        font-size: 14px;
+        margin-top: 0px;
+        margin-bottom: 24px;
     }
 
     label {
@@ -55,6 +61,8 @@
         border: 1px solid var(--primary);
         margin-bottom: 24px;
         padding: 8px;
+        font-size: 16px;
+        font-family: system-ui;
     }
 
     .password-input-container {
@@ -97,7 +105,7 @@
     }
 
     .signup-submit-button {
-        font-size: 14px;
+        font-size: 16px;
         height: 38px;
         line-height: 14px;
         margin: 0;
@@ -112,11 +120,37 @@
             background-color: var(--secondary);
         }
 
+        &:disabled {
+            background-color: var(--primary-light);
+            cursor: not-allowed;
+        }
+    }
+
+    .verify-button {
+        font-size: 16px;
+        font-family: system-ui;
+        height: 38px;
+        line-height: 14px;
+        margin: 0;
+        padding: 0 12px;
+        color: white;
+        background-color: var(--primary);
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--secondary);
+        }
+
+        &:disabled {
+            background-color: var(--primary-light);
+            cursor: not-allowed;
+        }
     }
 
     .error-text {
         color: var(--error);
-        width: min-content;
     }
 }
 

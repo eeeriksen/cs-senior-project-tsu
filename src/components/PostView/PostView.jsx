@@ -8,7 +8,7 @@ import { useModal } from '../../hooks/useModal';
 import { parseDate } from '../../utils/parseDate'
 import { useStore } from '../../store'
 import { Thrash } from '../Icons/Thrash';
-import { BackArrow } from '../Icons/BackArrow';
+import { BackArrow } from '../Icons';
 import "./PostView.css";
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -190,15 +190,15 @@ export function PostView() {
                 ) : (
                     <ul className="comments-list">
                         {comments.map(comment => {
-                            const commentDate = post && parseDate(post.createdAt);
-                            const commentTimeAgo = post && formatDistanceToNow(commentDate, { addSuffix: true });
+                            const commentDate = parseDate(comment.createdAt);
+                            const commentTimeAgo = formatDistanceToNow(commentDate, { addSuffix: true });
 
                             return (
                                 <li key={comment.commentId}>
                                     <p className="comment-item">{comment.username}• <span
-                                        title={postDate}
+                                        title={commentDate}
                                         className="time"
-                                    >{timeAgo}</span></p>
+                                    >{commentTimeAgo}</span></p>
                                     {user && user.username === comment.username && (
                                         <button
                                             className="remove-comment"

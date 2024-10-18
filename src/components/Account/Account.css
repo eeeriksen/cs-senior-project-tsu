@@ -1,0 +1,113 @@
+.account-section {
+    padding: 32px 16px;
+
+    .back-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        width: 24px;
+
+        svg {
+            color: var(--secondary);
+
+            &:hover {
+                color: var(--dark);
+            }
+        }
+    }
+
+    .page-title {
+        color: var(--secondary);
+    }
+
+    .form-group {
+
+        label {
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: var(--secondary);
+        }
+    }
+
+    .button-container {
+        .btn-delete {
+            background-color: var(--error);
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 8px 16px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    }
+
+    .modal-buttons {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+
+        .confirm-button {
+            background-color: var(--error);
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 8px 16px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--error-dark);
+            }
+        }
+
+        .cancel-button {
+            font-size: 16px;
+            height: 34px;
+            line-height: 16px;
+            margin: 0;
+            padding: 0 12px;
+            color: var(--primary);
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: var(--primary-light);
+            }
+        }
+    }
+
+    .modal-content {
+        p {
+            margin-top: 0;
+
+            span {
+                font-weight: bold;
+            }
+        }
+
+        input {
+            border-radius: 6px;
+            padding: 8px;
+            width: 100%;
+            font-family: system-ui;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 32px;
+            border: 2px solid var(--error);
+
+            &:focus {
+                outline: solid;
+            }
+        }
+    }
+
+    p.error-text {
+        margin-top: 16px;
+        color: var(--error);
+    }
+}

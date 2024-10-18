@@ -26,14 +26,14 @@ export const CreatePost = ({ closeModal, updatePosts }) => {
 
         const postId = crypto.randomUUID();
 
-        const domain = user.email.split('@')[1];
+        const domain = user.domain
 
         const postData = {
             postId,
             username: user.username,
             title,
             body,
-            college: domain,
+            domain,
         };
 
         try {

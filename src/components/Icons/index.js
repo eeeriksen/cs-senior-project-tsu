@@ -10,3 +10,4 @@ export { Collab } from './Collab';
 export { Voice } from './Voice';
 export { HappyFace } from './HappyFace';
 export { Refresh } from './Refresh';
+export { Account } from './Account';

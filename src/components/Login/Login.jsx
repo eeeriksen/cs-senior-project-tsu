@@ -25,7 +25,6 @@ export function Login({ login, errorLogin }) {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        console.log({ apiUrl })
         e.preventDefault()
         setError(null)
         setLoading(true)
@@ -41,15 +40,14 @@ export function Login({ login, errorLogin }) {
             const data = await response.json()
 
             if (response.status === 200) {
-                const { email } = data.user
-                const domain = email.split('@')[1]
+                const { domain } = data.user
                 const selectedEmailDomain = collegeByEmail[domain]
 
                 if (selectedEmailDomain !== "") {
                     setSearchSelectedItem(selectedEmailDomain)
                 }
                 setSuccess(true)
-                setUser({ username: data.user.username, ...data.user });
+                setUser(data.user);
                 navigate("/")
             } else {
                 setError(data.message)

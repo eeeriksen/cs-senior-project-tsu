@@ -3,7 +3,7 @@ import { useStore } from '../../store'
 import { useShallow } from 'zustand/react/shallow'
 import './Filter.css';
 
-const filters = ['Latest', 'Popular']
+const filters = ['Latest', 'Popular', 'Mine'];
 
 export function Filter({ setFilter }) {
     const { selectedFilter, setSelectedFilter } = useStore(

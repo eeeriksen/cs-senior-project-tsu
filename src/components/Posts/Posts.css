@@ -1,3 +1,25 @@
+section {
+    display: flex;
+    flex-direction: column;
+
+    button.account {
+        font-size: 16px;
+        height: 34px;
+        line-height: 16px;
+        margin-bottom: 10px;
+        padding: 0 12px;
+        color: var(--primary);
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        align-self: flex-end;
+
+        &:hover {
+            color: var(--dark);
+        }
+    }
+}
+
 .post-header {
     display: flex;
     justify-content: space-between;
@@ -5,7 +27,7 @@
 
     .new-post {
         font-size: 16px;
-        height: 40px;
+        height: 34px;
         line-height: 16px;
         margin: 0;
         padding: 0 12px;

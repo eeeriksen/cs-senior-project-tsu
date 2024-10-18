@@ -11,7 +11,6 @@ import { Modal } from '../Modal'
 import { Close, Thrash, Refresh } from '../Icons'
 import { Tooltip } from '../Tooltip';
 import { parseDate } from '../../utils/parseDate'
-import { RecommendationForm } from '../RecommendationForm'
 import './Posts.css'
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -43,13 +42,13 @@ export function Posts() {
         }))
     );
 
-    const userEmailDomain = user?.email.split('@')[1]
-    const selectedEmailDomain = emailByCollege[searchSelectedItem];
+    const userDomain = user.domain
+    const selectedUserDomain = emailByCollege[searchSelectedItem];
 
     const fetchPosts = async () => {
         try {
             setLoading(true)
-            const response = await fetch(`${apiUrl}/post/college/${selectedEmailDomain}`,
+            const response = await fetch(`${apiUrl}/post/domain/${selectedUserDomain}`,
                 {
                     method: 'GET',
                     headers: {
@@ -64,7 +63,7 @@ export function Posts() {
 
             const data = await response.json()
 
-            setUniversityPosts(selectedEmailDomain, data);
+            setUniversityPosts(selectedUserDomain, data);
             setPosts(data)
         } catch (error) {
             setError('Failed to fetch posts')
@@ -80,8 +79,8 @@ export function Posts() {
             return
         }
 
-        if (globalPosts[selectedEmailDomain]) {
-            setPosts(globalPosts[selectedEmailDomain])
+        if (globalPosts[selectedUserDomain]) {
+            setPosts(globalPosts[selectedUserDomain])
             return
         }
 
@@ -134,11 +133,11 @@ export function Posts() {
 
     const tooltipMessage = !user
         ? 'You must be logged in to post'
-        : userEmailDomain !== selectedEmailDomain && 'You can only post in your college';
+        : userDomain !== selectedUserDomain && 'You can only post in your college';
 
     const isNewPostDisabled = !user
         ? true
-        : userEmailDomain !== selectedEmailDomain ? true : false;
+        : userDomain !== selectedUserDomain ? true : false;
 
     const modalContent = !postToDelete ? (
         <CreatePost closeModal={toggleModal} updatePosts={updatePosts} />
@@ -155,86 +154,81 @@ export function Posts() {
 
     const sortedPosts = filter === 'Popular'
         ? [...posts].sort((a, b) => b.commentCount - a.commentCount)
-        : posts
+        : filter === "Mine"
+            ? [...posts].filter(post => post.username === user.username)
+            : posts
 
     if (loading) return <p>Loading posts...</p>
     if (error) return <p>{error}</p>
 
     return (
-        <>
-            <section>
-                <div className="post-header">
-                    <h2 className="post-headline">
-                        {filter} Posts
-                        <button onClick={refreshPosts}>
-                            <Refresh />
-                        </button>
-                    </h2>
-                    <Tooltip
-                        showTooltip={isNewPostDisabled}
-                        message={tooltipMessage}
+        <section className="posts-section">
+            <div className="post-header">
+                <h2 className="post-headline">
+                    {filter === 'Mine' ? 'My' : filter} Posts
+                    <button title="Get latest posts" onClick={refreshPosts}>
+                        <Refresh />
+                    </button>
+                </h2>
+                <Tooltip
+                    showTooltip={isNewPostDisabled}
+                    message={tooltipMessage}
+                >
+                    <button
+                        disabled={isNewPostDisabled}
+                        className="new-post"
+                        onClick={toggleModal}
                     >
-                        <button
-                            disabled={isNewPostDisabled}
-                            className="new-post"
-                            onClick={toggleModal}
-                        >
-                            New Post
-                        </button>
-                    </Tooltip>
-                </div>
-                <Filter setFilter={setFilter} />
-                <ul className="post-list">
-                    {
-                        sortedPosts.length === 0 ? (
-                            <p>No posts yet</p>
-                        ) : sortedPosts.map(post => {
-                            const postDate = parseDate(post.createdAt);
-                            const timeAgo = formatDistanceToNow(postDate, { addSuffix: true });
-
-                            return (
-                                <li className="post-item" key={post.postId}>
-                                    <div className="post-data">
-                                        <p className="username">
-                                            {post.username} • <span
-                                                title={postDate}
-                                                className="time"
-                                            >{timeAgo}</span>
-                                        </p>
-                                        {user && user.username === post.username && (
-                                            <button
-                                                className="delete-icon"
-                                                onClick={() => openDeletePostModal(post.postId)}
-                                            >
-                                                <Thrash />
-                                            </button>
-                                        )}
-                                    </div>
-                                    <Link
-                                        className="post-title"
-                                        to={`/posts/${post.postId}`}
-                                    >
-                                        <p>{post.title}</p>
-                                    </Link>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-
+                        New Post
+                    </button>
+                </Tooltip>
+            </div>
+            <Filter setFilter={setFilter} />
+            <ul className="post-list">
                 {
-                    isModalOpen && (
-                        <Modal toggleModal={closeDeletePostModal}>
-                            {modalContent}
-                        </Modal>
-                    )
+                    sortedPosts.length === 0 ? (
+                        <p>No posts yet</p>
+                    ) : sortedPosts.map(post => {
+                        const postDate = parseDate(post.createdAt);
+                        const timeAgo = formatDistanceToNow(postDate, { addSuffix: true });
+
+                        return (
+                            <li className="post-item" key={post.postId}>
+                                <div className="post-data">
+                                    <p className="username">
+                                        {post.username} • <span
+                                            title={postDate}
+                                            className="time"
+                                        >{timeAgo}</span>
+                                    </p>
+                                    {user && user.username === post.username && (
+                                        <button
+                                            className="delete-icon"
+                                            onClick={() => openDeletePostModal(post.postId)}
+                                        >
+                                            <Thrash />
+                                        </button>
+                                    )}
+                                </div>
+                                <Link
+                                    className="post-title"
+                                    to={`/posts/${post.postId}`}
+                                >
+                                    <p>{post.title}</p>
+                                </Link>
+                            </li>
+                        )
+                    })
                 }
-            </section >
-            <section className="submit-recommendations">
-                <div className="container">
-                    <RecommendationForm />
-                </div>
-            </section>
-        </>
+            </ul>
+
+            {
+                isModalOpen && (
+                    <Modal toggleModal={closeDeletePostModal}>
+                        {modalContent}
+                    </Modal>
+                )
+            }
+        </section >
     )
 }

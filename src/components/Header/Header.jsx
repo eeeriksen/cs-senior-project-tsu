@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
 import { useShallow } from 'zustand/react/shallow'
 import { useStore } from '../../store'
-import { Logo } from '../Icons/Logo'
+import { Logo, Account } from '../Icons'
 import { Search } from '../Search'
 import './Header.css'
 
@@ -56,7 +56,10 @@ export function Header() {
                 </nav>
                 <Search />
                 {user ? (
-                    <button className="signup-button" onClick={handleLogout}>Log out</button>
+                    <>
+                        <button className="logout-button" onClick={handleLogout}>Log out</button>
+                        <Link className="account-link" to='/account'><Account /></Link>
+                    </>
                 ) : (
                     <div className="buttons">
                         {isLogin && (
