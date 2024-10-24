@@ -24,16 +24,16 @@ export function SignUp() {
         setShowPassword(prevState => !prevState);
     };
 
-    const handleVerifyEmail = async () => {
+    const handleVerifyEmail = async (e) => {
         setLoading(true);
         setError(null);
-        // const domain = email.split('@')[1];
+        const domain = email.split('@')[1];
 
-        // if (!Object.keys(collegeByEmail).includes(domain)) {
-        //     setError('Please enter a valid academic email.');
-        //     setLoading(false);
-        //     return;
-        // }
+        if (!Object.keys(collegeByEmail).includes(domain)) {
+            setError('Please enter a valid academic email.');
+            setLoading(false);
+            return;
+        }
 
         try {
             const response = await fetch(`${apiUrl}/user/verify-email`, {
@@ -85,7 +85,7 @@ export function SignUp() {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
         setError(null);
         setLoading(true);
@@ -128,9 +128,13 @@ export function SignUp() {
         }
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
     return (
         <div className="signup-box">
-            <form className="signup-form">
+            <form className="signup-form" onSubmit={handleSubmit}>
                 <h1>Create your account</h1>
                 <p className="email-verify">Your email is used solely to verify your university affiliation. It is not stored in our database.</p>
 
@@ -141,8 +145,14 @@ export function SignUp() {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            onKeyUp={(e) => e.key === 'Enter' && handleVerifyEmail()}
                         />
-                        <button className="verify-button" type="button" onClick={handleVerifyEmail} disabled={loading}>
+                        <button
+                            className="verify-button"
+                            type="button"
+                            onClick={handleVerifyEmail}
+                            disabled={loading}
+                        >
                             Verify Email
                         </button>
                     </>
@@ -186,7 +196,7 @@ export function SignUp() {
                             </button>
                         </div>
                         <p className="password-rules">Password must contain 8+ characters, including at least 1 letter and 1 number.</p>
-                        <button className="signup-submit-button" disable={`${loading}`} onClick={handleSubmit}>Sign Up</button>
+                        <button className="signup-submit-button" disable={`${loading}`} onClick={handleSignup}>Sign Up</button>
                         <p className="aknowledge">By clicking “Sign up”, you agree to our <Link to="/term-of-service">terms of service</Link> and acknowledge you have read our <Link to="/privacy-policy">privacy policy</Link>.
                         </p>
                     </>
