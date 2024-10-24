@@ -69,6 +69,7 @@ export const CreatePost = ({ closeModal, updatePosts }) => {
                 <label>Title</label>
                 <input
                     type="text"
+                    name="post-title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     required
@@ -78,6 +79,7 @@ export const CreatePost = ({ closeModal, updatePosts }) => {
                 <label>Body</label>
                 <textarea
                     value={body}
+                    name="post-body"
                     onChange={(e) => setBody(e.target.value)}
                     required
                 ></textarea>
